@@ -1,11 +1,29 @@
 const express=require('express');
+const cors = require('cors');
 const routerApi=require('./routes');
 const {logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
-const { use } = require('./routes/products.router');
+
+
 const app=express();
 const port=3000;
 
 app.use(express.json());
+
+
+const whitelist = [
+    'http://localhost:3000',
+    'http://myapp.co'
+]
+const options = {
+    origin: (origin, callback) => {
+        if(whitelist.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Forbidden'))
+        }
+    }
+}
+app.use(cors());
 
 app.get('/',(req,res)=>{res.send('Hola mi server en express');});
 app.get('/nueva-ruta',(req,res)=>{res.send('Hola, soy una nueva ruta');});
