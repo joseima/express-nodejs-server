@@ -10,3 +10,8 @@ deps:
 error handling: @hapi/boom 
 validation data: joi
 CORS: cors
+
+
+ //-------------------------///---------------------------------///
+
+Database: postgres via docker container
